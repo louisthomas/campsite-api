@@ -23,21 +23,21 @@ public class BookingController {
     }
 
     @PostMapping
-    public ResponseEntity<Booking> createBooking(@RequestBody @Valid BookingRequest bookingRequest) {
-        Booking booking = bookingService.createBooking(bookingRequest);
-        return ResponseEntity.created(URI.create("/api/v1/bookings/" + booking.getId())).body(booking);
+    public ResponseEntity<BookingDto> createBooking(@RequestBody @Valid BookingRequest bookingRequest) {
+        BookingDto bookingDto = bookingService.createBooking(bookingRequest);
+        return ResponseEntity.created(URI.create("/api/v1/bookings/" + bookingDto.getId())).body(bookingDto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Booking> getBooking(@PathVariable() UUID id) {
+    public ResponseEntity<Booking> getBooking(@PathVariable("id") UUID id) {
         Booking booking = bookingService.findBookingById(id);
         return new ResponseEntity<>(booking, HttpStatus.OK);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Booking> updateBooking(@PathVariable("id") UUID id, @RequestBody @Valid BookingRequest bookingRequest) {
-        Booking booking = bookingService.updateBooking(id, bookingRequest);
-        return new ResponseEntity<>(booking, HttpStatus.OK);
+    public ResponseEntity<BookingDto> updateBooking(@PathVariable("id") UUID id, @RequestBody @Valid BookingRequest bookingRequest) {
+        BookingDto bookingDto = bookingService.updateBooking(id, bookingRequest);
+        return new ResponseEntity<>(bookingDto, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")

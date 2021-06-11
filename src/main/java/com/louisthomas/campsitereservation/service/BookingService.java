@@ -1,5 +1,6 @@
 package com.louisthomas.campsitereservation.service;
 
+import com.louisthomas.campsitereservation.controller.BookingDto;
 import com.louisthomas.campsitereservation.model.Booking;
 import com.louisthomas.campsitereservation.repository.BookingRepository;
 import com.louisthomas.campsitereservation.controller.BookingRequest;
@@ -26,10 +27,11 @@ public class BookingService {
     }
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public Booking createBooking(BookingRequest booking) {
+    public BookingDto createBooking(BookingRequest bookingRequest) {
         //todo: Date overlap query
         //Return error with dates
-        return bookingRepository.save(modelMapper.map(booking, Booking.class));
+        Booking booking = bookingRepository.save(modelMapper.map(bookingRequest, Booking.class));
+        return modelMapper.map(booking, BookingDto.class);
     }
 
     @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
@@ -40,8 +42,11 @@ public class BookingService {
     }
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public Booking updateBooking(UUID id, BookingRequest booking) {
-        return null;
+    public BookingDto updateBooking(UUID id, BookingRequest bookingRequest) {
+        //todo: send custom exception throw new BookingNotFoundException(String.format("booking not found with id=%d",id)
+        bookingRepository.findById(id).orElseThrow(RuntimeException::new);
+        Booking booking = bookingRepository.save(modelMapper.map(bookingRequest, Booking.class));
+        return modelMapper.map(booking, BookingDto.class);
     }
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)

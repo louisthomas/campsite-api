@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,16 +23,19 @@ public class AvailabilityService {
 
     @Transactional(readOnly = true)
     public List<LocalDate> findAvailableDates(LocalDate startDate, LocalDate endDate) {
-        LocalDate now = LocalDate.now();
-        Assert.isTrue(startDate.isBefore(now) || startDate.isEqual(now), "StartDate must be in the future");
-        Assert.isTrue(endDate.isBefore(now) || endDate.isEqual(now), "EndDate must be in the future");
-        Assert.isTrue(startDate.isAfter(endDate), "StartDate must be before endDate");
+        var now = LocalDate.now();
+        log.debug("Now %", now);
+        Assert.isTrue(startDate.isAfter(now) || startDate.isEqual(now), "StartDate must be in the future");
+        Assert.isTrue(endDate.isAfter(now) || endDate.isEqual(now), "EndDate must be in the future");
+        Assert.isTrue(startDate.isBefore(endDate), "StartDate must be before endDate");
 
         List<Booking> availableBookings = bookingRepository.findByDateRange(startDate, endDate);
-        List<LocalDate> availableDates = startDate.datesUntil(endDate.plusDays(1)).collect(Collectors.toList());
+        List<LocalDate> availableDates = startDate.datesUntil(endDate.plusDays(1)).distinct()
+                .collect(Collectors.toList());
 
-        availableBookings.forEach(booking -> availableDates.removeAll(booking.getStartDate().datesUntil(booking.getEndDate()).collect(Collectors.toList())));
-
+        availableBookings.forEach(booking -> availableDates
+                .removeAll(booking.getStartDate().datesUntil(booking.getEndDate()).collect(Collectors.toList()))
+        );
         return availableDates;
     }
 

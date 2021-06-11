@@ -16,6 +16,5 @@ CREATE TABLE booking (
 ALTER TABLE booking
   ADD CONSTRAINT  overlapping_booking
     EXCLUDE USING gist (
-        id WITH =,
         DATERANGE(start_date, end_date, '[]') WITH &&
     );

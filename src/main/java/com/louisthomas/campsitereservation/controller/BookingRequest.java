@@ -1,15 +1,13 @@
 package com.louisthomas.campsitereservation.controller;
 
-import com.sun.istack.NotNull;
+
 import lombok.Data;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @Data
+//todo: Add 3 days max validation and startDate before enddate validation
 public class BookingRequest {
     @Email
     private String email;

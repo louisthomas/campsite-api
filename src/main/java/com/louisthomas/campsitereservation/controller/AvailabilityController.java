@@ -14,6 +14,7 @@ import javax.validation.constraints.FutureOrPresent;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController()
 @RequestMapping("/api/v1/availabilities")
@@ -30,8 +31,8 @@ public class AvailabilityController {
 
     @GetMapping
     public ResponseEntity<List<LocalDate>> getReservation(
-            @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @FutureOrPresent LocalDate startDate,
-            @RequestParam(required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @Future Optional<LocalDate> endDate) {
+            @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  LocalDate startDate,
+            @RequestParam(required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  Optional<LocalDate> endDate) {
         return ResponseEntity.ok(availabilityService.findAvailableDates(startDate, endDate.orElseGet(() -> startDate.plusDays(defaultSearchEndDate))));
     }
 }
