@@ -2,6 +2,7 @@ package com.louisthomas.campsitereservation.controller;
 
 import com.louisthomas.campsitereservation.service.AvailabilityService;
 
+import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -28,17 +29,16 @@ public class AvailabilityControllerTest {
     private AvailabilityService availabilityService;
 
     @Test
-    public void whenvalidInput_thenReturns200() throws Exception {
+    public void shouldReturns200WhenValidationDateRange() throws Exception {
 
         given(availabilityService.findAvailableDates(any(LocalDate.class), any(LocalDate.class)))
                 .willReturn(Arrays.asList(LocalDate.now()));
 
-        mockMvc.perform(get("/api/v1/availabilities")
-                .param("startDate", "2")
-                .param("endDate", "2020-10-11"))
-                .andDo(print())
-//                .andExpect(status().isOk())
-                .andExpect(content().string("test"));
-    }
 
+        mockMvc.perform(get("/api/v1/availabilities")
+                .param("startDate", LocalDate.now().plusDays(1).toString())
+                .param("endDate", LocalDate.now().plusDays(3).toString()))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
 }

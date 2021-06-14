@@ -1,7 +1,9 @@
 package com.louisthomas.campsitereservation.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Generated;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -14,6 +16,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "booking", schema = "campsite")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Generated
 @EntityListeners(AuditingEntityListener.class)
 public class Booking {
