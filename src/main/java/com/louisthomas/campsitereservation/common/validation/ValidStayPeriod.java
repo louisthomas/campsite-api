@@ -6,9 +6,9 @@ import java.lang.annotation.*;
 
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {PeriodStayValidator.class})
+@Constraint(validatedBy = {StayPeriodValidator.class})
 @Documented
-public @interface ValidPeriodStay {
+public @interface ValidStayPeriod {
 
     String message() default "Booking must be equals or less than three days";
     Class<?>[] groups() default {};

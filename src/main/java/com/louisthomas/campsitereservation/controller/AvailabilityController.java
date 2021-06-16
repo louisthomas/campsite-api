@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController()
 @RequestMapping("/api/v1/availabilities")
@@ -30,7 +30,7 @@ public class AvailabilityController {
     }
 
     @GetMapping
-    public ResponseEntity<List<LocalDate>> getReservation(
+    public ResponseEntity<Set<LocalDate>> getReservation(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> endDate) {
         log.debug("Find availabilities between {} and {}", startDate, endDate);

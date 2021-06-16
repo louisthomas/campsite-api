@@ -1,7 +1,7 @@
 package com.louisthomas.campsitereservation.controller;
 
 
-import com.louisthomas.campsitereservation.common.validation.ValidPeriodStay;
+import com.louisthomas.campsitereservation.common.validation.ValidStayPeriod;
 import com.louisthomas.campsitereservation.common.validation.ValidDateRange;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,9 +13,10 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ValidPeriodStay
+@ValidStayPeriod
 @ValidDateRange
 public class BookingRequest {
+
     @Email
     private String email;
 

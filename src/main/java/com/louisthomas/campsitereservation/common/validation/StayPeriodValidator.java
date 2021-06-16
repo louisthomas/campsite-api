@@ -7,7 +7,7 @@ import javax.validation.ConstraintValidatorContext;
 import java.time.Period;
 import java.util.Objects;
 
-public class PeriodStayValidator implements ConstraintValidator<ValidPeriodStay, BookingRequest> {
+public class StayPeriodValidator implements ConstraintValidator<ValidStayPeriod, BookingRequest> {
 
     private static final int MAX_PERIOD_STAY = 3;
 

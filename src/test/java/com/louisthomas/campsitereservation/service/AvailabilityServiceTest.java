@@ -12,6 +12,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -29,7 +30,7 @@ class AvailabilityServiceTest {
     private AvailabilityService availabilityService;
 
     @Test
-    public void shouldThrowIllegalExceptionWhenStartDateIsInThePast() {
+    void shouldThrowIllegalExceptionWhenStartDateIsInThePast() {
         IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class,
                 () -> availabilityService
                         .findAvailableDates(LocalDate.parse("2021-06-10"), LocalDate.parse("2021-06-20")));
@@ -37,7 +38,7 @@ class AvailabilityServiceTest {
     }
 
     @Test
-    public void shouldThrowIllegalExceptionWhenEndDateIsInThePast() {
+    void shouldThrowIllegalExceptionWhenEndDateIsInThePast() {
         IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class,
                 () -> availabilityService
                         .findAvailableDates(LocalDate.now().plusDays(2), LocalDate.parse("2021-06-10")));
@@ -46,7 +47,7 @@ class AvailabilityServiceTest {
     }
 
     @Test
-    public void shouldThrowIllegalExceptionWhenEndDateIsBeforeStartDate() {
+     void shouldThrowIllegalExceptionWhenEndDateIsBeforeStartDate() {
         IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class,
                 () -> availabilityService.findAvailableDates(LocalDate.now().plusDays(4), LocalDate.now().plusDays(3)));
 
@@ -54,7 +55,7 @@ class AvailabilityServiceTest {
     }
 
     @Test
-    public void shouldReturnAvailableDateWhenValidDateRange() {
+     void shouldReturnAvailableDateWhenValidDateRange() {
         LocalDate startDate = LocalDate.now().plusDays(2);
         LocalDate endDate = LocalDate.now().plusDays(5);
 
@@ -62,8 +63,8 @@ class AvailabilityServiceTest {
                 new Booking(UUID.randomUUID(), "toto.test@gmail.com", "Toto Test", startDate, endDate,
                         Instant.now(), Instant.now())));
 
-        List<LocalDate> availableDates = availabilityService.findAvailableDates(startDate, endDate);
+        Set<LocalDate> availableDates = availabilityService.findAvailableDates(startDate, endDate);
         assertThat(availableDates.size()).isEqualTo(1);
-        assertThat(availableDates.get(0)).isEqualTo(endDate);
+        assertThat(availableDates.contains(endDate)).isTrue();
     }
 }

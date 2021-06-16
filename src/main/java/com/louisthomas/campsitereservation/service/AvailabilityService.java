@@ -9,6 +9,8 @@ import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,7 +24,7 @@ public class AvailabilityService {
     }
 
     @Transactional(readOnly = true)
-    public List<LocalDate> findAvailableDates(LocalDate startDate, LocalDate endDate) {
+    public Set<LocalDate> findAvailableDates(LocalDate startDate, LocalDate endDate) {
         var now = LocalDate.now();
         log.debug("Now {}", now);
         Assert.isTrue(startDate.isAfter(now) || startDate.isEqual(now), "StartDate must be in the future");
@@ -31,12 +33,11 @@ public class AvailabilityService {
 
         List<Booking> availableBookings = bookingRepository.findByDateRange(startDate, endDate);
         log.debug("Find all bookings: {}", availableBookings);
-        List<LocalDate> availableDates = startDate.datesUntil(endDate.plusDays(1)).distinct()
-                .collect(Collectors.toList());
+        Set<LocalDate> availableDates = startDate.datesUntil(endDate.plusDays(1)).distinct()
+                .collect(Collectors.toCollection(TreeSet::new));
         availableBookings.forEach(booking -> availableDates
-                .removeAll(booking.getStartDate().datesUntil(booking.getEndDate()).collect(Collectors.toList()))
-        );
-        log.debug("Available dates: {}", availableDates);
+                .removeAll(booking.getStartDate().datesUntil(booking.getEndDate()).collect(Collectors.toList())));
+        log.info("Available dates: {}", availableDates);
         return availableDates;
     }
 }

@@ -1,6 +1,6 @@
 package com.louisthomas.campsitereservation.service;
 
-import com.louisthomas.campsitereservation.common.exception.NotFoundBookingException;
+import com.louisthomas.campsitereservation.common.exception.BookingNotFoundException;
 import com.louisthomas.campsitereservation.controller.BookingDto;
 import com.louisthomas.campsitereservation.model.Booking;
 import com.louisthomas.campsitereservation.repository.BookingRepository;
@@ -36,19 +36,22 @@ public class BookingService {
     @Transactional(readOnly = true)
     public Booking findBookingById(UUID id) {
         Optional<Booking> booking = bookingRepository.findById(id);
-        return booking.orElseThrow(() -> new NotFoundBookingException(id));
+        return booking.orElseThrow(() -> new BookingNotFoundException(id));
     }
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public BookingDto updateBooking(UUID id, BookingRequest bookingRequest) {
-        bookingRepository.findById(id).orElseThrow(() -> new NotFoundBookingException(id));
-        Booking booking = bookingRepository.save(modelMapper.map(bookingRequest, Booking.class));
-        return modelMapper.map(booking, BookingDto.class);
+        Booking booking = bookingRepository.findById(id).orElseThrow(() -> new BookingNotFoundException(id));
+        booking.setEmail(bookingRequest.getEmail());
+        booking.setFullName(bookingRequest.getFullName());
+        booking.setStartDate(bookingRequest.getStartDate());
+        booking.setEndDate(bookingRequest.getEndDate());
+        return modelMapper.map(bookingRepository.save(booking), BookingDto.class);
     }
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void cancelBooking(UUID id) {
-        Booking booking = bookingRepository.findById(id).orElseThrow(() -> new NotFoundBookingException(id));
+        Booking booking = bookingRepository.findById(id).orElseThrow(() -> new BookingNotFoundException(id));
         bookingRepository.delete(booking);
         log.info("Deleted booking with id: {}", id  );
     }

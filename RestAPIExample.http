@@ -4,8 +4,8 @@ Content-Type: application/json
 {
   "email" : "ltlamontagne@gmail.com",
   "fullName": "Louis-Thomas Lamontagne",
-  "startDate": "2021-06-18",
-  "endDate": "2021-06-20"
+  "startDate": "2021-06-23",
+  "endDate": "2021-06-26"
 }
 
 ###
@@ -28,4 +28,4 @@ Content-Type: application/json
 DELETE http://localhost:8080/api/v1/bookings/3544e65d-f46f-4894-b543-b8c1fd94fdd2
 
 ###
-GET http://localhost:8080/api/v1/availabilities?startDate=2021-06-11&endDate=2021-06
+GET http://localhost:8080/api/v1/availabilities?startDate=2021-06-17&endDate=2021-06-30
