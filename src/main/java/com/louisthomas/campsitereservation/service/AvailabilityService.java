@@ -24,19 +24,19 @@ public class AvailabilityService {
     @Transactional(readOnly = true)
     public List<LocalDate> findAvailableDates(LocalDate startDate, LocalDate endDate) {
         var now = LocalDate.now();
-        log.debug("Now %", now);
+        log.debug("Now {}", now);
         Assert.isTrue(startDate.isAfter(now) || startDate.isEqual(now), "StartDate must be in the future");
         Assert.isTrue(endDate.isAfter(now) || endDate.isEqual(now), "EndDate must be in the future");
         Assert.isTrue(startDate.isBefore(endDate), "StartDate must be before endDate");
 
         List<Booking> availableBookings = bookingRepository.findByDateRange(startDate, endDate);
+        log.debug("Find all bookings: {}", availableBookings);
         List<LocalDate> availableDates = startDate.datesUntil(endDate.plusDays(1)).distinct()
                 .collect(Collectors.toList());
-
         availableBookings.forEach(booking -> availableDates
                 .removeAll(booking.getStartDate().datesUntil(booking.getEndDate()).collect(Collectors.toList()))
         );
+        log.debug("Available dates: {}", availableDates);
         return availableDates;
     }
-
 }

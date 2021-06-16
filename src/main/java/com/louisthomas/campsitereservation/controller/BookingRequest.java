@@ -1,19 +1,26 @@
 package com.louisthomas.campsitereservation.controller;
 
 
+import com.louisthomas.campsitereservation.common.validation.ValidPeriodStay;
+import com.louisthomas.campsitereservation.common.validation.ValidDateRange;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @Data
-//todo: Add 3 days max validation and startDate before enddate validation
+@AllArgsConstructor
+@NoArgsConstructor
+@ValidPeriodStay
+@ValidDateRange
 public class BookingRequest {
     @Email
     private String email;
 
     @NotEmpty
-    @Size(max = 50)
+    @Size(max = 100)
     private String fullName;
 
     @NotNull

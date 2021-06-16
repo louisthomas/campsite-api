@@ -1,5 +1,6 @@
 package com.louisthomas.campsitereservation.service;
 
+import com.louisthomas.campsitereservation.common.exception.NotFoundBookingException;
 import com.louisthomas.campsitereservation.controller.BookingDto;
 import com.louisthomas.campsitereservation.model.Booking;
 import com.louisthomas.campsitereservation.repository.BookingRepository;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @Slf4j
 public class BookingService {
 
-    private BookingRepository bookingRepository;
+    private final BookingRepository bookingRepository;
 
     private ModelMapper modelMapper;
 
@@ -28,30 +29,27 @@ public class BookingService {
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public BookingDto createBooking(BookingRequest bookingRequest) {
-        //todo: Date overlap query
-        //Return error with dates
         Booking booking = bookingRepository.save(modelMapper.map(bookingRequest, Booking.class));
         return modelMapper.map(booking, BookingDto.class);
     }
 
-    @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
+    @Transactional(readOnly = true)
     public Booking findBookingById(UUID id) {
         Optional<Booking> booking = bookingRepository.findById(id);
-        //todo: send custom exception throw new BookingNotFoundException(String.format("booking not found with id=%d",id)
-        return booking.orElseThrow(RuntimeException::new);
+        return booking.orElseThrow(() -> new NotFoundBookingException(id));
     }
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public BookingDto updateBooking(UUID id, BookingRequest bookingRequest) {
-        //todo: send custom exception throw new BookingNotFoundException(String.format("booking not found with id=%d",id)
-        bookingRepository.findById(id).orElseThrow(RuntimeException::new);
+        bookingRepository.findById(id).orElseThrow(() -> new NotFoundBookingException(id));
         Booking booking = bookingRepository.save(modelMapper.map(bookingRequest, Booking.class));
         return modelMapper.map(booking, BookingDto.class);
     }
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void cancelBooking(UUID id) {
-        bookingRepository.deleteById(id);
+        Booking booking = bookingRepository.findById(id).orElseThrow(() -> new NotFoundBookingException(id));
+        bookingRepository.delete(booking);
         log.info("Deleted booking with id: {}", id  );
     }
 }

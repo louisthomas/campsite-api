@@ -3,3 +3,4 @@
 
 Campsite API
 
+`docker-compose up && ./mvnw spring-boot:run -Drun.jvmArguments="-Dspring.profiles.active=local"`

@@ -24,24 +24,28 @@ public class BookingController {
 
     @PostMapping
     public ResponseEntity<BookingDto> createBooking(@RequestBody @Valid BookingRequest bookingRequest) {
+        log.debug("Create booking {}", bookingRequest);
         BookingDto bookingDto = bookingService.createBooking(bookingRequest);
         return ResponseEntity.created(URI.create("/api/v1/bookings/" + bookingDto.getId())).body(bookingDto);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Booking> getBooking(@PathVariable("id") UUID id) {
+        log.debug("Get booking for id {}", id);
         Booking booking = bookingService.findBookingById(id);
         return new ResponseEntity<>(booking, HttpStatus.OK);
     }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<BookingDto> updateBooking(@PathVariable("id") UUID id, @RequestBody @Valid BookingRequest bookingRequest) {
+        log.debug("Update booking with id {} and payload: {}", id, bookingRequest);
         BookingDto bookingDto = bookingService.updateBooking(id, bookingRequest);
         return new ResponseEntity<>(bookingDto, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> cancelBooking(@PathVariable("id") UUID id) {
+        log.debug("Cancel booking for id {}", id);
         bookingService.cancelBooking(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
