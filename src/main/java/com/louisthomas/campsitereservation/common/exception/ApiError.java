@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -27,5 +28,11 @@ public class ApiError {
         errors = Arrays.asList(error);
     }
 
+    public ApiError(HttpStatus status, String message) {
+        super();
+        this.status = status;
+        this.message = message;
+        errors = Collections.emptyList();
+    }
 }
 
