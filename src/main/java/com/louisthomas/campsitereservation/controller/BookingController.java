@@ -47,6 +47,6 @@ public class BookingController {
     public ResponseEntity<Void> cancelBooking(@PathVariable("id") UUID id) {
         log.debug("Cancel booking for id {}", id);
         bookingService.cancelBooking(id);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @DataJpaTest
+//Tell Spring not to replace the database with an embedded database
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class BookingRepositoryTest extends AbstractIntegrationTest {
 

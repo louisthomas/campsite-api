@@ -62,6 +62,12 @@ public class BookingControllerAdvice {
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
+    @ExceptionHandler(BookingNotFoundException.class)
+    public  ResponseEntity<Object> handleBookingNotFoundException(BookingNotFoundException ex){
+        var apiError = new ApiError(HttpStatus.NOT_FOUND, ex.getMessage());
+        return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
+
 
     private String createErrorMessage(String fieldName, String message) {
         return String.format("Field: %s, message: %s", fieldName, message);

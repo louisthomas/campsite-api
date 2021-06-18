@@ -19,16 +19,53 @@ docker-compose down
 
 ## API Reference
 
+[Query](RestAPIExample.http)
+
 #### Get all available dates
 
-```http
-  GET /api/v1/availabilities?startDate=2021-06-26&endDate=2021-06-30
+```bash
+curl -X GET --location "http://localhost:8080/api/v1/availabilities?startDate=2021-06-17&endDate=2021-06-30"
 ```
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `startDate` | `YYYY-MM-DD` | **Required**. LocalDate |
-| `endDate` | `YYYY-MM-DD` |  LocalDate. Default value 30 days |
+#### Create new booking
+
+```bash
+curl -X POST --location "http://localhost:8080/api/v1/bookings/" \
+    -H "Content-Type: application/json" \
+    -d "{
+          \"email\" : \"ltlamontagne@gmail.com\",
+          \"fullName\": \"Louis-Thomas Lamontagne\",
+          \"startDate\": \"2021-06-23\",
+          \"endDate\": \"2021-06-26\"
+        }"
+```
+
+#### Update booking
+
+```bash
+curl -X PUT --location "http://localhost:8080/api/v1/bookings/3f46333f-c668-4177-9c3c-0c3e35613a52" \
+    -H "Content-Type: application/json" \
+    -d "{
+          \"email\" : \"ltlamontagne@gmail.com\",
+          \"fullName\": \"Tony Amonte\",
+          \"startDate\": \"2021-09-12\",
+          \"endDate\": \"2021-09-15\"
+        }"
+```
+
+#### Get Booking
+
+```bash
+curl -X GET --location "http://localhost:8080/api/v1/bookings/3f46333f-c668-4177-9c3c-0c3e35613a52" \
+    -H "Accept: application/json"
+```
+
+#### Delete booking
+
+```bash
+curl -X DELETE --location "http://localhost:8080/api/v1/bookings/3544e65d-f46f-4894-b543-b8c1fd94fdd2"
+```
+
 
 ## Authors
 
