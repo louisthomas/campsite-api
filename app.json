@@ -1,0 +1,14 @@
+{
+  "name": "campsite-reservation",
+  "description": "Campiste reservation API",
+  "repository": "https://github.com/louisthomas/campsite-api",
+  "keywords": ["Spring Boot", "Heroku", "Deployment, Postgresql"],
+  "addons": [
+    {
+      "plan": "heroku-postgresql:hobby-dev",
+      "options": {
+        "version": "12"
+      }
+    }
+  ]
+}
