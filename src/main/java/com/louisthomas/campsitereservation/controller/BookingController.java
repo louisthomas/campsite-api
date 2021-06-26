@@ -1,6 +1,5 @@
 package com.louisthomas.campsitereservation.controller;
 
-import com.louisthomas.campsitereservation.model.Booking;
 import com.louisthomas.campsitereservation.service.BookingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -30,14 +29,15 @@ public class BookingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Booking> getBooking(@PathVariable("id") UUID id) {
+    public ResponseEntity<BookingDto> getBooking(@PathVariable("id") UUID id) {
         log.debug("Get booking for id {}", id);
-        Booking booking = bookingService.findBookingById(id);
+        BookingDto booking = bookingService.findBookingById(id);
         return new ResponseEntity<>(booking, HttpStatus.OK);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<BookingDto> updateBooking(@PathVariable("id") UUID id, @RequestBody @Valid BookingRequest bookingRequest) {
+    public ResponseEntity<BookingDto> updateBooking(@PathVariable("id") UUID id,
+                                                    @RequestBody @Valid BookingRequest bookingRequest) {
         log.debug("Update booking with id {} and payload: {}", id, bookingRequest);
         BookingDto bookingDto = bookingService.updateBooking(id, bookingRequest);
         return new ResponseEntity<>(bookingDto, HttpStatus.OK);

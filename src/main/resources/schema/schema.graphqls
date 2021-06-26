@@ -1,0 +1,28 @@
+type Query {
+    availability(startDate: Date!, endDate: Date): [Date]
+    booking(id: String): [BookingDto]
+
+}
+
+type Mutation {
+    addBooking(booking:SubmittedBooking): BookingDto
+    updateBooking(id: String!, booking:SubmittedBooking): BookingDto
+    removeBooking(id: String!): Boolean
+}
+
+input SubmittedBooking {
+    email: String!
+    fullName: String!
+    startDate: Date!
+    endDate: Date!
+}
+
+type BookingDto {
+    id: String
+    email: String
+    fullName: String
+    startDate: Date
+    endDate: Date
+}
+
+scalar Date

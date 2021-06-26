@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -34,9 +36,10 @@ public class BookingService {
     }
 
     @Transactional(readOnly = true)
-    public Booking findBookingById(UUID id) {
+    public BookingDto findBookingById(UUID id) {
         Optional<Booking> booking = bookingRepository.findById(id);
-        return booking.orElseThrow(() -> new BookingNotFoundException(id));
+        booking.orElseThrow(() -> new BookingNotFoundException(id));
+        return modelMapper.map(booking, BookingDto.class);
     }
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
@@ -54,5 +57,11 @@ public class BookingService {
         Booking booking = bookingRepository.findById(id).orElseThrow(() -> new BookingNotFoundException(id));
         bookingRepository.delete(booking);
         log.info("Deleted booking with id: {}", id  );
+    }
+
+    @Transactional(readOnly = true)
+    public List<BookingDto> findAll() {
+        List<Booking> bookings = bookingRepository.findAll();
+        return bookings.stream().map(booking -> modelMapper.map(booking, BookingDto.class)).collect(Collectors.toList());
     }
 }

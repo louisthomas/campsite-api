@@ -17,7 +17,7 @@ import java.util.Set;
 @RestController()
 @RequestMapping("/api/v1/availabilities")
 @Slf4j
-public class AvailabilityController {
+public class    AvailabilityController {
 
     private final int defaultSearchEndDate;
 
