@@ -67,6 +67,14 @@ curl -X DELETE --location "http://localhost:8080/api/v1/bookings/3544e65d-f46f-4
 ```
 
 
+### Deployment
+
+It uses Heroku to deploy, for details see [deploy pipeline](.github/workflows/deploy.yml) and [application 
+manifest](app.json).
+
+URL: [https://campsite-reservation-ltl.herokuapp.com/actuator/health](https://campsite-reservation-ltl.herokuapp.com/)
+
+Actuator health check endpoint: [https://campsite-reservation-ltl.herokuapp.com/actuator/health](https://campsite-reservation-ltl.herokuapp.com/actuator/health)
 ## Authors
 
 - [@louisthomas](https://www.github.com/louisthomas)
