@@ -37,8 +37,7 @@ public class BookingService {
 
     @Transactional(readOnly = true)
     public BookingDto findBookingById(UUID id) {
-        Optional<Booking> booking = bookingRepository.findById(id);
-        booking.orElseThrow(() -> new BookingNotFoundException(id));
+        Booking booking = bookingRepository.findById(id).orElseThrow(() -> new BookingNotFoundException(id));
         return modelMapper.map(booking, BookingDto.class);
     }
 

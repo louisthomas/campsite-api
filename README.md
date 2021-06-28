@@ -19,7 +19,7 @@ docker-compose down
 
 ## API Reference
 
-[Query](RestAPIExample.http)
+[Query examples](rest-api-request.http)
 
 #### Get all available dates
 
@@ -66,8 +66,26 @@ curl -X GET --location "http://localhost:8080/api/v1/bookings/3f46333f-c668-4177
 curl -X DELETE --location "http://localhost:8080/api/v1/bookings/3544e65d-f46f-4894-b543-b8c1fd94fdd2"
 ```
 
+## GraphQL reference
 
-### Deployment
+[Query examples](graphql-request.http)
+
+### Get all bookings
+```bash
+curl -X POST --location "http://localhost:8080/graphql" \
+    -H "Content-Type: application/graphql" \
+    -d "query{
+  booking {
+    id
+    email
+    fullName
+    startDate
+    endDate
+  }
+}"
+```
+
+## Deployment
 
 It uses Heroku to deploy, for details see [deploy pipeline](.github/workflows/deploy.yml) and [application 
 manifest](app.json).

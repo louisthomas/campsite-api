@@ -1,0 +1,51 @@
+POST http://localhost:8080/graphql
+Content-Type: application/json
+
+{"query":"query {availability(startDate:\"2021-06-29\", endDate:\"2021-07-29\")}"}
+
+############
+
+POST http://localhost:8080/graphql
+Content-Type: application/graphql
+
+mutation {
+  addBooking(booking: {email: "toto3@gmail.com", fullName: "test", startDate: "2021-07-10", endDate: "2021-07-13"} ){
+    id
+    email
+    fullName
+    startDate
+    endDate
+  }
+}
+
+
+############
+
+POST http://localhost:8080/graphql
+Content-Type: application/graphql
+
+query{
+  booking {
+    id
+    email
+    fullName
+    startDate
+    endDate
+  }
+}
+
+############
+
+POST http://localhost:8080/graphql
+Content-Type: application/graphql
+
+query{
+  booking(id: "978a6774-311d-4ed2-95fc-4b6a71d3970c"){
+    id
+    email
+    fullName
+    startDate
+    endDate
+  }
+}
+
