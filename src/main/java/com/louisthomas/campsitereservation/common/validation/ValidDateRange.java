@@ -13,7 +13,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = {DateRangeValidator.class})
 @Documented
 public @interface ValidDateRange {
-    String message() default "Booking start date must be before end date";
+    String message() default "{booking.invalidDateRange}";
 
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};

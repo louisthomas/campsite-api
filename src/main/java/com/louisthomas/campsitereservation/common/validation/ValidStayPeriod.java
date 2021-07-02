@@ -10,7 +10,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface ValidStayPeriod {
 
-    String message() default "Booking must be equals or less than three days";
+    String message() default "{booking.stayPeriod.invalid}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

@@ -1,6 +1,7 @@
 package com.louisthomas.campsitereservation.controller;
 
 
+import com.louisthomas.campsitereservation.common.validation.ValidStartDate;
 import com.louisthomas.campsitereservation.common.validation.ValidStayPeriod;
 import com.louisthomas.campsitereservation.common.validation.ValidDateRange;
 import lombok.AllArgsConstructor;
@@ -21,14 +22,15 @@ public class BookingRequest {
     private String email;
 
     @NotEmpty
-    @Size(max = 100)
+    @Size(max = 200)
     private String fullName;
 
     @NotNull
-    @Future(message = "Booking start date must be in the future date")
+    @Future(message = "{booking.startDate.mustBeInTheFuture}")
+    @ValidStartDate
     private LocalDate startDate;
 
     @NotNull
-    @Future(message = "Booking end date must be in the future date")
+    @Future(message = "{booking.endDate.mustBeInTheFuture}")
     private LocalDate endDate;
 }
