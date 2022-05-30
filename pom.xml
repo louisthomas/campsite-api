@@ -15,7 +15,7 @@
     <description>Campiste reservation API</description>
     <properties>
         <java.version>11</java.version>
-        <graphqldgs.version>4.9.25</graphqldgs.version>
+        <graphqldgs.version>5.0.1</graphqldgs.version>
         <testcontainers.version>1.16.3</testcontainers.version>
     </properties>
     <dependencies>
