@@ -1,6 +1,7 @@
 # campsite-api
 
 [![Java CI with Maven](https://github.com/louisthomas/campsite-api/actions/workflows/ci.yml/badge.svg)](https://github.com/louisthomas/campsite-api/actions/workflows/ci.yml)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/louisthomas/campsite-api/badge)](https://api.securityscorecards.dev/projects/github.com/louisthomas/campsite-api)
 
 REST API service that manage the campsite reservations
 
